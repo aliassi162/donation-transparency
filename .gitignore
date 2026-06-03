@@ -1,0 +1,8 @@
+.env
+*.db
+__pycache__/
+.pytest_cache/
+backend/.venv/
+backend/donation_transparency.db
+frontend/node_modules/
+frontend/dist/
