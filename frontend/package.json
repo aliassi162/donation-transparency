@@ -7,7 +7,7 @@
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "start": "vite preview --host 0.0.0.0 --port ${PORT:-4173}",
+    "start": "node -e \"const fs=require('fs');const value=process.env.VITE_API_BASE_URL||'';fs.writeFileSync('dist/env.js','window.__APP_CONFIG__ = '+JSON.stringify({VITE_API_BASE_URL:value})+';\\\\n');\" && vite preview --host 0.0.0.0 --port ${PORT:-4173}",
     "lint": "eslint ."
   },
   "dependencies": {
