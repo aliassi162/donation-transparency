@@ -81,6 +81,7 @@ class HouseholdOut(HouseholdBase):
 
 
 class DistributionBase(BaseModel):
+    distribution_code: str | None = None
     household_id: int | None = None
     household_code: str | None = None
     amount: Decimal = Field(gt=0)
@@ -99,6 +100,7 @@ class DistributionUpdate(DistributionBase):
 
 class DistributionOut(BaseModel):
     id: int
+    distribution_code: str | None = None
     household_id: int
     household_code: str
     location: str | None = None

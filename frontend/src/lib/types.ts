@@ -35,6 +35,7 @@ export type Household = {
 
 export type Distribution = {
   id: number;
+  distribution_code?: string | null;
   household_id: number;
   household_code: string;
   location?: string | null;
@@ -44,7 +45,7 @@ export type Distribution = {
   notes?: string | null;
 };
 
-export type PublicDistribution = Omit<Distribution, "id" | "household_id" | "notes">;
+export type PublicDistribution = Omit<Distribution, "id" | "distribution_code" | "household_id" | "notes">;
 
 export type ImportPreview = {
   valid: boolean;

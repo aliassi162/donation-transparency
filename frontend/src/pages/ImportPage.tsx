@@ -8,6 +8,7 @@ const endpoints = {
   households: "/admin/import/households",
   donations: "/admin/import/donations",
   distributions: "/admin/import/distributions",
+  workbook: "/admin/import/workbook",
 };
 
 const importInstructions = {
@@ -26,14 +27,20 @@ const importInstructions = {
   distributions: {
     helpKey: "distributionImportHelp",
     required: ["household_code", "amount", "distribution_date"],
-    optional: ["assistance_type", "notes"],
-    example: "household_code,amount,distribution_date,assistance_type,notes\nHH-0001,50,2026-06-03,cash_transfer,Cash transfer support",
+    optional: ["distribution_code", "assistance_type", "notes"],
+    example: "distribution_code,household_code,amount,distribution_date,assistance_type,notes\nDIST-0001,HH-0001,50,2026-06-03,cash_transfer,Cash transfer support",
+  },
+  workbook: {
+    helpKey: "workbookImportHelp",
+    required: ["households sheet", "distributions sheet"],
+    optional: ["distribution_code is recommended for each distribution"],
+    example: "Sheet: households\nhousehold_code,location,private_name,private_phone,private_notes,status\nHH-0001,Ansar,Sample Family,+961000000,Internal note,active\n\nSheet: distributions\ndistribution_code,household_code,amount,distribution_date,assistance_type,notes\nDIST-0001,HH-0001,50,2026-06-03,cash_transfer,Cash transfer support",
   },
 };
 
 export default function ImportPage() {
   const { t } = useI18n();
-  const [type, setType] = useState<keyof typeof endpoints>("households");
+  const [type, setType] = useState<keyof typeof endpoints>("workbook");
   const [file, setFile] = useState<File | null>(null);
   const [result, setResult] = useState<ImportPreview | null>(null);
   const [error, setError] = useState("");
@@ -49,16 +56,23 @@ export default function ImportPage() {
   }
 
   const instructions = importInstructions[type];
+  const isWorkbook = type === "workbook";
 
   return <section className="space-y-4">
-    <h1 className="text-2xl font-semibold">{t("csvImport")}</h1>
+    <h1 className="text-2xl font-semibold">{t("dataImport")}</h1>
     <form onSubmit={submit} className="grid gap-3 rounded-lg border border-slate-200 bg-white p-4 md:grid-cols-3">
       <select value={type} onChange={(e) => setType(e.target.value as keyof typeof endpoints)}>
         <option value="households">{t("households")}</option>
         <option value="donations">{t("donations")}</option>
         <option value="distributions">{t("distributions")}</option>
+        <option value="workbook">{t("excelWorkbook")}</option>
       </select>
-      <input type="file" accept=".csv,text/csv" onChange={(e) => setFile(e.target.files?.[0] ?? null)} required />
+      <input
+        type="file"
+        accept={isWorkbook ? ".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" : ".csv,text/csv"}
+        onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+        required
+      />
       <button className="bg-emerald-700 text-white">{t("validateImport")}</button>
     </form>
     <div className="space-y-4 rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600">
@@ -74,7 +88,7 @@ export default function ImportPage() {
         </div>
       </div>
       <div className="rounded-md bg-slate-950 p-3 text-slate-100">
-        <p className="mb-2 font-semibold">{t("exampleCsv")}</p>
+        <p className="mb-2 font-semibold">{isWorkbook ? t("exampleWorkbook") : t("exampleCsv")}</p>
         <pre className="overflow-x-auto whitespace-pre text-xs"><code>{instructions.example}</code></pre>
       </div>
     </div>

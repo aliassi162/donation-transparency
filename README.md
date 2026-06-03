@@ -51,17 +51,29 @@ cd backend
 alembic upgrade head
 ```
 
-## CSV Import
+## CSV and Excel Import
 
 Admin CSV import validates the full file before saving. Invalid uploads return row numbers and errors, and no rows are imported.
 
 - Households: `household_code, location, private_name, private_phone, private_notes, status`
 - Donations: `amount, received_date, donor_name, donor_display_name, donor_country, is_public, notes`
-- Distributions: `household_code, amount, distribution_date, assistance_type, notes`
+- Distributions: `distribution_code, household_code, amount, distribution_date, assistance_type, notes`
 
 All amounts are tracked and displayed in USD.
 
 Dates use `YYYY-MM-DD`. Distribution imports match households by `household_code`.
+
+Admins can also upload one `.xlsx` workbook through the Excel workbook import. It must contain two sheets named exactly:
+
+- `households`
+- `distributions`
+
+The workbook import is accumulative. Existing households are updated by `household_code`, and new household codes are created. Distributions are updated by `distribution_code` when it is provided. If `distribution_code` is missing, the backend tries to avoid duplicates by matching `household_code`, `amount`, `distribution_date`, and `assistance_type`.
+
+Recommended workbook columns:
+
+- `households`: `household_code, location, private_name, private_phone, private_notes, status`
+- `distributions`: `distribution_code, household_code, amount, distribution_date, assistance_type, notes`
 
 ## Privacy Rules
 

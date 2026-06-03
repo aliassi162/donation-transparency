@@ -35,13 +35,15 @@ def ensure_sqlite_columns() -> None:
     inspector = inspect(engine)
     table_columns = {
         table: {column["name"] for column in inspector.get_columns(table)}
-        for table in ("donations_received", "households")
+        for table in ("donations_received", "households", "distributions")
     }
     with engine.begin() as connection:
         if "donor_country" not in table_columns["donations_received"]:
             connection.execute(text("ALTER TABLE donations_received ADD COLUMN donor_country VARCHAR(100)"))
         if "location" not in table_columns["households"]:
             connection.execute(text("ALTER TABLE households ADD COLUMN location VARCHAR(255)"))
+        if "distribution_code" not in table_columns["distributions"]:
+            connection.execute(text("ALTER TABLE distributions ADD COLUMN distribution_code VARCHAR(100)"))
 
 
 app = create_app()

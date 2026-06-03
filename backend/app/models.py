@@ -62,6 +62,7 @@ class Distribution(Base):
     __tablename__ = "distributions"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    distribution_code: Mapped[str] = mapped_column(String(100), unique=True, nullable=True)
     household_id: Mapped[int] = mapped_column(ForeignKey("households.id", ondelete="CASCADE"))
     amount: Mapped[Decimal] = mapped_column(Numeric(12, 2))
     currency: Mapped[str] = mapped_column(String(3), default="USD")
