@@ -40,15 +40,15 @@ export default function DashboardCharts({
   return (
     <section className="grid gap-4 lg:grid-cols-5">
       <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:p-5 lg:col-span-3">
-        <div className="mb-5">
-          <h2 className="text-xl font-semibold">{t("fundOverview")}</h2>
+        <div className="mb-4 sm:mb-5">
+          <h2 className="text-lg font-semibold sm:text-xl">{t("fundOverview")}</h2>
           <p className="mt-1 text-sm text-slate-500">
             {t("fundOverviewNote")}
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-[220px_1fr] md:items-center">
-          <div className="relative mx-auto h-40 w-40 sm:h-52 sm:w-52">
+        <div className="grid gap-4 md:grid-cols-[220px_1fr] md:items-center">
+          <div className="relative mx-auto h-36 w-36 sm:h-52 sm:w-52">
             <svg className="-rotate-90" viewBox="0 0 120 120">
               <circle cx="60" cy="60" r="44" fill="none" stroke="#e2e8f0" strokeWidth="14" />
               <circle
@@ -65,7 +65,7 @@ export default function DashboardCharts({
             </svg>
             <div className="absolute inset-0 grid place-items-center text-center">
               <div>
-                <p className="text-3xl font-semibold text-slate-950">{distributedPercent.toFixed(0)}%</p>
+                <p className="text-2xl font-semibold text-slate-950 sm:text-3xl">{distributedPercent.toFixed(0)}%</p>
                 <p className="mt-1 text-sm text-slate-500">{t("distributed")}</p>
               </div>
             </div>
@@ -91,13 +91,13 @@ export default function DashboardCharts({
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3 pt-2">
-              <div className="rounded-lg bg-emerald-50 p-4 text-emerald-800">
+              <div className="rounded-lg bg-emerald-50 p-3 text-emerald-800 sm:p-4">
                 <p className="text-xs font-medium uppercase">{t("donationCount")}</p>
-                <p className="mt-2 text-2xl font-semibold">{summary.donations_count}</p>
+                <p className="mt-2 text-xl font-semibold sm:text-2xl">{summary.donations_count}</p>
               </div>
-              <div className="rounded-lg bg-sky-50 p-4 text-sky-800">
+              <div className="rounded-lg bg-sky-50 p-3 text-sky-800 sm:p-4">
                 <p className="text-xs font-medium uppercase">{t("distributionCount")}</p>
-                <p className="mt-2 text-2xl font-semibold">{summary.distributions_count}</p>
+                <p className="mt-2 text-xl font-semibold sm:text-2xl">{summary.distributions_count}</p>
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@ export default function DashboardCharts({
       </div>
 
       <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:p-5 lg:col-span-2">
-          <h2 className="text-xl font-semibold">{t("aidByType")}</h2>
+          <h2 className="text-lg font-semibold sm:text-xl">{t("aidByType")}</h2>
           <p className="mt-1 text-sm text-slate-500">{t("assistanceCoverage")}</p>
           {typeData.length === 0 ? (
             <p className="mt-5 text-sm text-slate-500">{t("noDistributionTypes")}</p>

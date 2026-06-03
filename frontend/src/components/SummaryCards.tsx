@@ -17,12 +17,12 @@ export default function SummaryCards({ summary }: { summary: Summary }) {
       {cards.map(({ label, value, tone, Icon }) => (
         <div key={label} className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm sm:p-4">
           <div className="flex items-center gap-2">
-            <span className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${tone}`}>
-              <Icon size={18} />
+            <span className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg sm:h-9 sm:w-9 ${tone}`}>
+              <Icon size={17} />
             </span>
-            <p className="text-sm font-medium leading-tight text-slate-500">{label}</p>
+            <p className="text-[13px] font-medium leading-tight text-slate-500 sm:text-sm">{label}</p>
           </div>
-          <p className="mt-3 break-words text-xl font-semibold text-slate-950 sm:text-2xl">{value}</p>
+          <p className="mt-3 break-words text-lg font-semibold text-slate-950 sm:text-2xl">{value}</p>
         </div>
       ))}
     </div>
