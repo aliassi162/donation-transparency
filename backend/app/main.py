@@ -11,7 +11,7 @@ from app.seed import seed_admin
 def create_app() -> FastAPI:
     settings = get_settings()
     Base.metadata.create_all(bind=engine)
-    ensure_sqlite_columns()
+    ensure_required_columns()
     with SessionLocal() as db:
         seed_admin(db)
 
@@ -30,9 +30,7 @@ def create_app() -> FastAPI:
     return app
 
 
-def ensure_sqlite_columns() -> None:
-    if not engine.url.get_backend_name().startswith("sqlite"):
-        return
+def ensure_required_columns() -> None:
     inspector = inspect(engine)
     table_columns = {
         table: {column["name"] for column in inspector.get_columns(table)}
@@ -45,6 +43,7 @@ def ensure_sqlite_columns() -> None:
             connection.execute(text("ALTER TABLE households ADD COLUMN location VARCHAR(255)"))
         if "distribution_code" not in table_columns["distributions"]:
             connection.execute(text("ALTER TABLE distributions ADD COLUMN distribution_code VARCHAR(100)"))
+        connection.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS uq_distributions_distribution_code ON distributions (distribution_code)"))
 
 
 app = create_app()
