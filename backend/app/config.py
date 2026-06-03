@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     admin_email: str = "admin@admin.com"
     admin_password: str = "Secret"
     cors_origins: str = "http://localhost:5173"
-    cors_origin_regex: str | None = r"https://.*\.up\.railway\.app"
+    cors_origin_regex: str | None = r"https://(.*\.up\.railway\.app|www\.ansar-aid\.com|ansar-aid\.com)"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
