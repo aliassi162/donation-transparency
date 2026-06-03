@@ -1,4 +1,16 @@
-const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000").replace(/\/+$/, "");
+declare global {
+  interface Window {
+    __APP_CONFIG__?: {
+      VITE_API_BASE_URL?: string;
+    };
+  }
+}
+
+const API_BASE = (
+  window.__APP_CONFIG__?.VITE_API_BASE_URL ||
+  import.meta.env.VITE_API_BASE_URL ||
+  "http://localhost:8000"
+).replace(/\/+$/, "");
 
 export function getToken() {
   return localStorage.getItem("admin_token");
